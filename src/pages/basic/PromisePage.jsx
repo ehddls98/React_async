@@ -10,7 +10,18 @@ function PromisePage(props) {
         }
     }
 
-    
+    const testPromise1 = async() => {
+        const response = {
+            status: 200,
+            data: ""
+        }
+        loop("test1");
+        if(Response.status === 400) {
+            throw new Error(); //reject와 같은 역할을 함
+        }
+        return response; //return이 resolve와 같은 역할을 함 즉 async를 붙이면 resolve, reject를 쓸 필요가 없음
+    }
+
     const testPromise = () => {
         return new Promise((resolve, reject) => {
             loop("test1");
@@ -18,18 +29,6 @@ function PromisePage(props) {
         });
     }
 
-    // const testPromise1 = async() => {
-    //     const response = {
-    //         status: 200,
-    //         data: ""
-    //     }
-    //     loop("test1");
-    //     if(Response.status === 400) {
-    //         throw new Error();
-    //     }
-    //     return response; //return이 resolve와 같은 역할을 함 즉 async를 붙이면 resolve, reject를 쓸 필요가 없음
-    // }
-    
     const testPromise2 = () => {
         return new Promise((resolve, reject) => {
             loop("test2");
@@ -88,14 +87,14 @@ function PromisePage(props) {
         console.log(r3);
     }
 
-    //testPromise 4, 5, 는 둘다 promise 이기 때문에 .then()을 쓸 수 있다는 것을 보여주는 코드
+    //testPromise 4, 5, 는 둘 다 promise 이기 때문에 .then()을 쓸 수 있다는 것을 보여주는 코드
     const handleClick3 = () => {
         //async를 쓰지 않으면 .then() .catch()를 써야함
         testPromise4(0)
-        .then(r => {
+        .then(r => { //testPromise4의 resolve를 받으면 then으로 넘어감
             console.log(r);
             testPromise5(0)
-            .then(r => {
+            .then(r => { // testPromise5의 resolve를 받으면 then으로 넘어감
                 console.log(r);
             })
             .catch(e => {
@@ -131,8 +130,6 @@ function PromisePage(props) {
         }
         
     }
-
-    
 
     return (
         <div>
